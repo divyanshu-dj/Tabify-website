@@ -3,11 +3,6 @@ import { db } from "../../../lib/db";
 import { hash } from "bcrypt";
 import { CreateUserSchema } from "../../../lib/validations";
 
-export async function GET() {
-    return NextResponse.json({
-        message: "Hello from the API!"
-    })
-}
 
 export async function POST(req: Request) {
     try {

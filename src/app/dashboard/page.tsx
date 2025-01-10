@@ -1,18 +1,18 @@
-import LeftSidebar from '../../components/dashboard/leftSidebar'
-import Hero from '../../components/dashboard/hero'
+import { redirect } from 'next/navigation';
+import DashboardPage from './dashboard'
+import React from 'react'
+import { checkIsAuth } from '@/components/auth/checkIsAuth'
 
 
-const Dashboard = async() => {
-    return (
-      <div className='h-screen flex'>
-        <div className="w-1/6">
-            <LeftSidebar />
-        </div>
-        <div className="w-5/6">
-            <Hero />
-        </div>
-      </div>
-    )
+const Dashboard: React.FC = async() => {
+    const isAuth = await checkIsAuth();
+    if ( !isAuth ) {
+      redirect("/api/auth/signin")
+    } else {
+      return (
+        <DashboardPage />
+      )
+    }
   }
   
   export default Dashboard

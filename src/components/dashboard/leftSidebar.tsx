@@ -6,6 +6,7 @@ import LeftSidebarClient from './leftSidebarClient';
 const LeftSidebar = async () => {
   const session = await getServerSession(authOptions);
   console.log(session);
+  
   return <LeftSidebarClient session={session} />;
 };
 

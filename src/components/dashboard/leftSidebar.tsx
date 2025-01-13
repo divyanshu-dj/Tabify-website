@@ -1,13 +1,17 @@
-// LeftSidebar.tsx (Server Component)
-import { getServerSession } from 'next-auth';
-import authOptions from '../../app/api/auth/[...nextauth]/options';
-import LeftSidebarClient from './leftSidebarClient';
+import ProfileButton from "./profileButton";
 
-const LeftSidebar = async () => {
-  const session = await getServerSession(authOptions);
-  console.log(session);
-  
-  return <LeftSidebarClient session={session} />;
+const LeftSidebarClient = () => {
+    return (
+        <div className="h-screen bg-dark-blue text-white flex flex-col">
+            <div className="flex-1">
+
+            </div>
+
+            <div className="mt-auto">
+                <ProfileButton />
+            </div>
+        </div>
+    );
 };
 
-export default LeftSidebar;
+export default LeftSidebarClient;

@@ -196,6 +196,7 @@ export function PlaceholdersAndVanishInput({
             onChange && onChange(e);
           }
         }}
+        spellCheck="false"
         onKeyDown={handleKeyDown}
         ref={inputRef}
         value={value}

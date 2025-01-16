@@ -11,13 +11,10 @@ export const Navbar = () => {
         // handle submit
     }
     return (
-        <nav className="bg-black h-12 flex items-center px-4 shadow-md border-b-2 border-gray-700">
-            <PlaceholdersAndVanishInput placeholders={["Search"]} onChange={onChange} onSubmit={onSubmit} />
-          <ul className="flex space-x-4">
-            <li><a href="/dashboard" className="hover:underline">Home</a></li>
-            <li><a href="/dashboard/settings" className="hover:underline">Settings</a></li>
-            <li><a href="/dashboard/profile" className="hover:underline">Profile</a></li>
-          </ul>
+        <nav className="bg-primary-black flex p-2 px-4 border-b-2 border-border-gray ">
+            <div className='w-2/5'>
+                <PlaceholdersAndVanishInput placeholders={["Search"]} onChange={onChange} onSubmit={onSubmit} />
+            </div>
         </nav>
     )
 }

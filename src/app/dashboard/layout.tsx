@@ -6,7 +6,7 @@ import { Navbar } from '@/components/ui/navbar';
 
 const DashboardLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="h-screen flex">
+    <div className="h-screen flex bg-primary-black">
       <div className="w-1/6">
         <LeftSidebar />
       </div>

@@ -20,13 +20,16 @@ export const ProfileButtonClient: React.FC<LeftSidebarClientProps> = ({
     const signOutOfAccount = () => signOut({ callbackUrl: "/api/auth/signin" });
     const [isHovered, setIsHovered] = useState(false);
     return (
-        <div className="relative overflow-hidden min-h-[3.5rem]">
+        <div
+            className="relative overflow-hidden min-h-[3.5rem]"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+        >
             {/* User Info */}
             <div
                 className={`absolute inset-0 w-full flex justify-center items-center bg-tertiary-black py-2 sm:py-3 transition-transform duration-500 ${
                     isHovered ? "-translate-x-full" : "translate-x-0"
                 }`}
-                onMouseEnter={() => setIsHovered(true)}
             >
                 <img
                     src={`${session?.user?.image || ""}`}
@@ -47,7 +50,6 @@ export const ProfileButtonClient: React.FC<LeftSidebarClientProps> = ({
                 className={`absolute inset-0 w-full flex justify-center items-center bg-tertiary-black py-2 sm:py-3 transition-transform duration-500 ${
                     isHovered ? "translate-x-0" : "translate-x-full"
                 }`}
-                onMouseLeave={() => setIsHovered(false)}
             >
                 <Button
                     onClick={signOutOfAccount}

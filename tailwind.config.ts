@@ -14,6 +14,8 @@ export default {
         'dark-blue': "#313338",
         'secondary-black': '#1e1f22',
         'tertiary-black': '#232428',
+        'primary-black': '#161616',
+        'border-gray': '#262626',
       },
     },
   },

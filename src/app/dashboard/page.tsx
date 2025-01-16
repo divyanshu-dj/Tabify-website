@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation';
 import React from 'react'
 import { checkIsAuth } from '@/components/auth/checkIsAuth'
-import LeftSidebar from '../../components/dashboard/leftSidebar'
 import Hero from '../../components/dashboard/hero'
 
 

@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation';
-import DashboardPage from './dashboard'
 import React from 'react'
 import { checkIsAuth } from '@/components/auth/checkIsAuth'
+import LeftSidebar from '../../components/dashboard/leftSidebar'
+import Hero from '../../components/dashboard/hero'
 
 
 const Dashboard: React.FC = async() => {
@@ -10,7 +11,7 @@ const Dashboard: React.FC = async() => {
       redirect("/api/auth/signin")
     } else {
       return (
-        <DashboardPage />
+          <Hero />
       )
     }
   }

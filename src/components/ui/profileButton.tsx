@@ -1,7 +1,7 @@
 //(Server Component)
 import { getServerSession } from 'next-auth';
 import authOptions from '../../app/api/auth/[...nextauth]/options';
-import { ProfileButtonClient } from '../ui/profileButtonClient';
+import { ProfileButtonClient } from './profileButtonClient';
 
 const ProfileButton = async () => {
   const session = await getServerSession(authOptions);

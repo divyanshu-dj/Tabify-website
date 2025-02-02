@@ -1,36 +1,49 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tabify
+
+Tabify is a powerful bookmark management tool designed to enhance your web browsing experience. It offers a unique approach to organizing and accessing your saved links, making it easier than ever to manage your digital resources.
+
+## Features
+
+- **Smart Link Storage**: Save links to anything you find important, from articles to videos.
+- **Google Search Integration**: Tabify injects relevant saved content alongside Google search results using a browser extension.
+- **Tab Management**: Store and restore entire browser window sessions, allowing you to close and reopen multiple tabs effortlessly.
+- **Intelligent Organization**: Automatically categorize your links for easy retrieval.
+- **Cross-Device Sync**: Access your bookmarks from any device with seamless synchronization.
+- **Customizable Collections**: Organize links into personalized collections for better categorization.
+- **Tagging System**: Add tags to your links for improved searchability.
+- **Importance Ranking**: Assign priority levels to your bookmarks for quick access to critical information.
 
 ## Getting Started
 
-First, run the development server:
+1. Sign up for a Tabify account at [www.tabify.com](https://www.tabify.com)
+2. Install the Tabify browser extension for your preferred browser.
+3. Start saving links and organizing your digital world!
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Usage
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- To save a link, click the Tabify extension icon or use the keyboard shortcut (Ctrl+Shift+S).
+- Access your saved links through the Tabify dashboard or directly from Google search results.
+- Use the "Store Tabs" feature to save entire browsing sessions for later use.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Technical Details
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Tabify is built using:
+- Next.js for the frontend
+- TypeScript for type-safe code
+- Tailwind CSS for styling
+- NextAuth.js for authentication
+- Supabase with PostgreSQL for the database
+- Prisma as the ORM
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+We welcome contributions to Tabify! Please see our [CONTRIBUTING.md](CONTRIBUTING.md) file for details on how to get involved.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Support
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For support, please visit our [Help Center](https://help.tabify.com) or contact us at support@tabify.com.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Tabify is released under the [MIT License](LICENSE).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

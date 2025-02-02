@@ -14,8 +14,9 @@ const authOptions: NextAuthOptions = {
     ],
     callbacks: {
         async jwt({token, user}) {
-            if ( user) {
-                return { ...token, id: user.id }
+            if (user) {
+                token.id = user.id;
+                token.exp = Math.floor(Date.now() / 1000) + (30 * 24 * 60 * 60); // 30 days
             }
             return token;
         },

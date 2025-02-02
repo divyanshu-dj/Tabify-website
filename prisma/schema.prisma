@@ -24,6 +24,13 @@ model User {
   sessions      Session[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
+
+  links         Link[]
+  groupedTabs   GroupedTab[]
+  numLinks       Int             @default(0)       // Number of links saved by the user
+  numGroupedTabs Int             @default(0)       // Number of grouped tabs saved by the user
+  subscription   Boolean         @default(false)   // Whether the user has a paid subscription
+  storageUsed    Int             @default(0)       // Storage used by the user (in KB or MB)
  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -83,38 +90,31 @@ model Authenticator {
  
   @@id([userId, credentialID])
 }
-// generator client {
-//   provider = "prisma-client-js"
-// }
 
-// datasource db {
-//   provider = "postgresql"
-//   url      = env("DATABASE_URL")
-// }
+model Link {
+  id          String     @id @default(cuid())
+  userId      String     // Foreign key to User
+  url         String     
+  collection  String     @default("Unorganized") 
+  title       String?    
+  description String?    
+  isPinned    Boolean    @default(false)
+  importance  Int        @default(1) 
+  thumbnail   String?    // Thumbnail URL
+  tags        String[]   // Array of tags
+  createdAt   DateTime   @default(now()) // Creation timestamp
+  updatedAt   DateTime   @updatedAt      // Update timestamp
 
-// model User {
-//   id        String   @id @default(cuid())
-//   email     String   @unique
-//   username  String?
-//   password  String
-//   image     String?
-//   isVerified Boolean @default(false)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
-//   // accounts  Account[]
-//   // collections Collection[]
-//   // links     Link[]
+model GroupedTab {
+  id        String   @id @default(cuid())
+  userId    String   // Foreign key to User
+  name      String
+  tabs      Json     // Array of tab objects (e.g., [{url, title, favicon}])
+  createdAt DateTime @default(now()) // Creation timestamp
+  updatedAt DateTime @updatedAt      // Update timestamp
 
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-  
-// }
-
-// // model Account {
-// //   id        String   @id @default(cuid())
-// //   name      String
-// //   userId    String
-// //   user      User     @relation(fields: [userId], references: [id])
-
-// //   createdAt DateTime @default(now())
-// //   updatedAt DateTime @updatedAt
-// // }
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

@@ -23,7 +23,7 @@ const linkFormSchema = z.object({
   collection: z.string(),
   importance: z.number().min(1).max(5),
   thumbnail: z.string().url().optional(),
-  tags: z.string(), // Will be split into array
+  tags: z.array(z.string()), // Will be split into array
   isPinned: z.boolean(),
 });
 
@@ -45,7 +45,7 @@ export function LinkForm({ initialData, onSubmit, onCancel }: LinkFormProps) {
       collection: initialData?.collection || "Unorganized",
       importance: initialData?.importance || 1,
       thumbnail: initialData?.thumbnail || "",
-      tags: initialData?.tags.join(", ") || "",
+      tags: initialData?.tags || [],
       isPinned: initialData?.isPinned || false,
     },
   });

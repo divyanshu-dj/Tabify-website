@@ -14,57 +14,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer"
-import LinkForm from "./form_client"
-
-const data = [
-  {
-    goal: 400,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 278,
-  },
-  {
-    goal: 189,
-  },
-  {
-    goal: 239,
-  },
-  {
-    goal: 300,
-  },
-  {
-    goal: 200,
-  },
-  {
-    goal: 278,
-  },
-  {
-    goal: 189,
-  },
-  {
-    goal: 349,
-  },
-]
+import { LinkForm } from "./form_client"
 
 export default function DrawerClient() {
-  const [goal, setGoal] = React.useState(350)
-
-  function onClick(adjustment: number) {
-    setGoal(Math.max(200, Math.min(400, goal + adjustment)))
-  }
-
   return (
     <Drawer>
       <DrawerTrigger asChild>
@@ -75,7 +27,7 @@ export default function DrawerClient() {
           <DrawerHeader>
             <DrawerTitle>Create New Link</DrawerTitle>
           </DrawerHeader>
-          <LinkForm />
+          <LinkForm onSubmit={() => {}} onCancel={() => {}} />
           <DrawerFooter>
             <div className="grid grid-cols-4 gap-4">
                 <Button variant="outline" className="col-span-3">Submit</Button>

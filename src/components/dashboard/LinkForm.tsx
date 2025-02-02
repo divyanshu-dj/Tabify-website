@@ -10,11 +10,11 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../ui/form";
-import { Input } from "../ui/input";
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
-import { Switch } from "../ui/switch";
+import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 
 const linkFormSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL" }),
@@ -54,7 +54,6 @@ export function LinkForm({ initialData, onSubmit, onCancel }: LinkFormProps) {
     // Convert tags string to array
     const formattedData = {
       ...data,
-      tags: data.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
     };
     onSubmit(formattedData);
   };

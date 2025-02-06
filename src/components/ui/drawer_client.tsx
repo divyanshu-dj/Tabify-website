@@ -32,7 +32,7 @@ export default function DrawerClient() {
                         </DrawerTitle>
                     </DrawerHeader>
                     <div className="border-b mb-4 w-full border-gray-600"></div>
-                    <LinkForm onSubmit={() => {}} onCancel={() => {}} />
+                    <LinkForm />
                 </div>
             </DrawerContent>
         </Drawer>

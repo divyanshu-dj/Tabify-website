@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
 import { DrawerFooter, DrawerClose } from "@/components/ui/drawer";
+import { Drawer, Drawer as DrawerPrimitive } from "vaul"
 import { Textarea } from "@/components/ui/textarea";
 import TagsInput from "@/components/ui/tag_field";
 import Importance from "./importance_field";
@@ -35,9 +36,11 @@ type LinkFormData = z.infer<typeof linkFormSchema>;
 
 interface LinkFormProps {
   initialData?: Link;
+  onClose: () => void;
+  isOpen: boolean;
 }
 
-export function LinkForm({ initialData}: LinkFormProps) {
+export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
   const form = useForm<LinkFormData>({
     resolver: zodResolver(linkFormSchema),
     defaultValues: {
@@ -84,8 +87,7 @@ export function LinkForm({ initialData}: LinkFormProps) {
         console.error("Error creating link:", result.error);
         return;
       }
-
-      console.log("Link created successfully:", result.link);
+      onClose();
     } catch (error) {
       console.error("Error creating link:", error);
       form.setError("root", {
@@ -185,7 +187,7 @@ export function LinkForm({ initialData}: LinkFormProps) {
                   <FormItem>
                     <FormLabel>Tags</FormLabel>
                     <FormControl>
-                      <TagsInput field={field} />
+                      <TagsInput field={{ ...field, value: field.value || [] }} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>

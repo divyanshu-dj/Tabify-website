@@ -1,15 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { Link, Minus, Plus } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
     Drawer,
-    DrawerClose,
     DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
     DrawerHeader,
     DrawerTitle,
     DrawerTrigger,

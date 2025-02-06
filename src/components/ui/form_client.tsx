@@ -65,7 +65,35 @@ export function LinkForm({ initialData}: LinkFormProps) {
     }
   };
   
-  const onSubmit: SubmitHandler<LinkFormData> = (data) => console.log(data)
+  const onSubmit: SubmitHandler<LinkFormData> =async(data) => {
+    try {
+      const response = await fetch("/api/links", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+
+      if (!response.ok) {
+        form.setError("root", {
+          type: "server",
+          message: result.error || "Failed to create link",
+        });
+        console.error("Error creating link:", result.error);
+        return;
+      }
+
+      console.log("Link created successfully:", result.link);
+    } catch (error) {
+      console.error("Error creating link:", error);
+      form.setError("root", {
+        type: "server",
+        message: "Submission failed. Please try again.",
+      });
+    }
+  }
 
   const [showAdvanced, setShowAdvanced] = useState(false);
 

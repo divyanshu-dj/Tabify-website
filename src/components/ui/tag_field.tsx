@@ -1,7 +1,7 @@
 import { X } from "lucide-react";
-import {  useState } from "react";
+import { useState } from "react";
 
-const TagsInput = ({ field }: { field: any }) => {
+const TagsInput = ({ field }: { field: { value: string[], onChange: (value: string[]) => void } }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -10,7 +10,10 @@ const TagsInput = ({ field }: { field: any }) => {
       if (!field.value.includes(inputValue.trim())) {
         field.onChange([...field.value, inputValue.trim()]);
       }
-      setInputValue("");
+        setInputValue("");
+      } else if (e.key === 'Backspace' && !inputValue.trim() && field.value.length > 0) {
+        e.preventDefault();
+        removeTag(field.value[field.value.length - 1]);
     }
   };
 

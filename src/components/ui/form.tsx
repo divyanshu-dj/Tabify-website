@@ -111,6 +111,7 @@ const FormControl = React.forwardRef<
 
   return (
     <Slot
+      className="border-gray-600"
       ref={ref}
       id={formItemId}
       aria-describedby={
@@ -157,7 +158,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-sm font-medium text-destructive", className)}
+      className={cn("text-xs font-medium text-red-600/50", className)}
       {...props}
     >
       {body}

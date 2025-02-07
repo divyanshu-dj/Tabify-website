@@ -15,8 +15,7 @@ import { SubmitHandler } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "../ui/button";
-import { DrawerFooter, DrawerClose } from "@/components/ui/drawer";
-import { Drawer, Drawer as DrawerPrimitive } from "vaul"
+import { DrawerClose } from "@/components/ui/drawer";
 import { Textarea } from "@/components/ui/textarea";
 import TagsInput from "@/components/ui/tag_field";
 import Importance from "./importance_field";
@@ -26,8 +25,8 @@ const linkFormSchema = z.object({
   title: z.string().optional(),
   description: z.string().optional(),
   collection: z.string().optional(),
-  importance: z.number().min(1).max(5),
-  thumbnail: z.string().url().optional(),
+  importance: z.coerce.number().min(1).max(5),
+  thumbnail: z.string().optional(),
   tags: z.array(z.string()).optional(),
   isPinned: z.boolean().optional(),
 });
@@ -37,10 +36,9 @@ type LinkFormData = z.infer<typeof linkFormSchema>;
 interface LinkFormProps {
   initialData?: Link;
   onClose: () => void;
-  isOpen: boolean;
 }
 
-export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
+export function LinkForm({ initialData, onClose}: LinkFormProps) {
   const form = useForm<LinkFormData>({
     resolver: zodResolver(linkFormSchema),
     defaultValues: {
@@ -49,47 +47,38 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
       description: initialData?.description || "",
       collection: initialData?.collection || "Unorganized",
       importance: initialData?.importance || 1,
-      thumbnail: initialData?.thumbnail || "",
+      thumbnail: initialData?.thumbnail || undefined,
       tags: initialData?.tags || [],
       isPinned: initialData?.isPinned || false,
     },
   });
-
-  const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = (event) => {
-    event.preventDefault();
-    const data = form.getValues();
-    try {
-      onSubmit(data);
-    } catch (error) {
-      form.setError('root', { 
-        type: 'manual',
-        message: 'Submission failed. Please try again.' 
-      });
-    }
-  };
   
-  const onSubmit: SubmitHandler<LinkFormData> =async(data) => {
+  const onSubmit: SubmitHandler<LinkFormData> = async(data) => {
+    console.log("Form data:", data);
     try {
-      const response = await fetch("/api/links", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-      const result = await response.json();
 
-      if (!response.ok) {
-        form.setError("root", {
-          type: "server",
-          message: result.error || "Failed to create link",
-        });
-        console.error("Error creating link:", result.error);
-        return;
-      }
-      onClose();
+      // const response = await fetch("/api/links", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(data),
+      // });
+      // const result = await response.json();
+
+      // if (!response.ok) {
+      //   form.setError("root", {
+      //     type: "server",
+      //     message: result.error || "Failed to create link",
+      //   });
+      //   console.error("Error creating link:", result.error);
+      //   return;
+      // }
+      // const thumbnail = await generateThumbnail(data.url);
+      // const finalData = { ...data, thumbnail };
+      // onClose();
     } catch (error) {
-      console.error("Error creating link:", error);
+      console.error("Error submitting form:", error);
       form.setError("root", {
         type: "server",
         message: "Submission failed. Please try again.",
@@ -101,7 +90,12 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleFormSubmit} className="space-y-4">
+      <form onSubmit={form.handleSubmit(
+          onSubmit,
+          (errors) => {
+            console.log("Validation errors:", errors); // Add this line
+          }
+        )}  className="space-y-4">
         <div className={`grid grid-cols-1 gap-4 ${showAdvanced ? "md:grid-cols-3" : ""}`}>
           <div className={showAdvanced ? "col-span-2" : "col-span-full"}>
             <FormField
@@ -117,7 +111,7 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 text-sm" />
                 </FormItem>
               )}
             />
@@ -136,7 +130,7 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 text-sm" />
                 </FormItem>
               )}
             />
@@ -151,10 +145,10 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
               <div className="flex items-center gap-5">
                 <FormLabel>Importance</FormLabel>
                 <FormControl>
-                  <Importance field={field} />
+                  <Importance field={{ ...field, value: Number(field.value) || 1 }} />
                 </FormControl>
               </div>
-              <FormMessage />
+              <FormMessage className="text-red-500 text-sm" />
             </FormItem>
           )}
         />
@@ -175,7 +169,7 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 text-sm" />
                   </FormItem>
                 )}
               />
@@ -188,8 +182,9 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
                     <FormLabel>Tags</FormLabel>
                     <FormControl>
                       <TagsInput field={{ ...field, value: field.value || [] }} />
+
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-500 text-sm" />
                   </FormItem>
                 )}
               />
@@ -208,7 +203,7 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-red-500 text-sm" />
                 </FormItem>
               )}
             />
@@ -232,7 +227,6 @@ export function LinkForm({ initialData, onClose, isOpen}: LinkFormProps) {
           <div className="flex gap-4">
             <Button
               type="submit"
-              onClick={()=>{console.log('submit')}}
               className="flex-1 h-11 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 transition-all rounded-lg"
               disabled={form.formState.isSubmitting}
             >

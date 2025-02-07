@@ -32,7 +32,7 @@ export default function DrawerClient() {
           </DrawerHeader>
           <div className="border-b mb-4 w-full border-gray-600"></div>
           {/* Pass the handleClose callback to your form */}
-          <LinkForm onClose={handleClose} isOpen={isOpen} />
+          <LinkForm onClose={handleClose}/>
         </div>
       </DrawerContent>
     </Drawer>

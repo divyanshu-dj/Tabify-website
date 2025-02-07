@@ -23,6 +23,7 @@ const Importance = ({ field }: ImportanceProps) => {
           onMouseEnter={() => setHoveredImportance(star)}
           onMouseLeave={() => setHoveredImportance(0)}
           className="focus:outline-none "
+          
         >
           <Star
             size={24}

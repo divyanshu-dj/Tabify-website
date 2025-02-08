@@ -6,12 +6,14 @@ const s3Client = new S3Client({
   credentials: {
     accessKeyId: process.env.AWS_ACCESS_KEY!,
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY!,
-  },
+},
 });
 
 interface ThumbnailUrlParams {
-  userUrl: string;
+    userUrl: string;
 }
+
+const MAX_SIZE = 1 * 1024 * 1024; // 1 MB limit
 
 function extractDomain(userUrl: string): string | null {
   try {
@@ -78,6 +80,11 @@ async function getThumbnailUrl({ userUrl }: ThumbnailUrlParams): Promise<string>
     // Retrieve the image as a Buffer.
     const buffer = Buffer.from(await response.arrayBuffer());
 
+
+    if (buffer.length > MAX_SIZE) {
+      throw new Error(`File size (${buffer.length} bytes) exceeds the allowed limit of ${MAX_SIZE} bytes.`);
+    }
+
     // Upload the image to S3 using the deterministic key.
     const putCommand = new PutObjectCommand({
       Bucket: bucketName,
@@ -85,6 +92,7 @@ async function getThumbnailUrl({ userUrl }: ThumbnailUrlParams): Promise<string>
       Body: buffer,
       ContentType: 'image/png',
     });
+    
     await s3Client.send(putCommand);
 
     // After uploading, generate a signed URL to access the object.

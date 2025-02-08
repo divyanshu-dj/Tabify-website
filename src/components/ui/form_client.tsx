@@ -75,10 +75,7 @@ export function LinkForm({ initialData, onClose}: LinkFormProps) {
         console.error("Error creating link:", result.error);
         return;
       }
-      // const thumbnail = await getThumbnailUrl({ userUrl: data.url });
-      // const finalData = { ...data, thumbnail };
-      // onClose();
-      // console.log("Form data:", finalData);
+      onClose();
     } catch (error) {
       console.error("Error submitting form:", error);
       form.setError("root", {

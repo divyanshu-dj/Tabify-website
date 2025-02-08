@@ -19,6 +19,7 @@ import { DrawerClose } from "@/components/ui/drawer";
 import { Textarea } from "@/components/ui/textarea";
 import TagsInput from "@/components/ui/tag_field";
 import Importance from "./importance_field";
+import getThumbnailUrl from "@/lib/api/getThumbnailUrl";
 
 const linkFormSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL" }),
@@ -54,29 +55,30 @@ export function LinkForm({ initialData, onClose}: LinkFormProps) {
   });
   
   const onSubmit: SubmitHandler<LinkFormData> = async(data) => {
-    console.log("Form data:", data);
     try {
+      console.log("Form data:", data);
 
-      // const response = await fetch("/api/links", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify(data),
-      // });
-      // const result = await response.json();
+      const response = await fetch("/api/links", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
 
-      // if (!response.ok) {
-      //   form.setError("root", {
-      //     type: "server",
-      //     message: result.error || "Failed to create link",
-      //   });
-      //   console.error("Error creating link:", result.error);
-      //   return;
-      // }
-      // const thumbnail = await generateThumbnail(data.url);
+      if (!response.ok) {
+        form.setError("root", {
+          type: "server",
+          message: result.error || "Failed to create link",
+        });
+        console.error("Error creating link:", result.error);
+        return;
+      }
+      // const thumbnail = await getThumbnailUrl({ userUrl: data.url });
       // const finalData = { ...data, thumbnail };
       // onClose();
+      // console.log("Form data:", finalData);
     } catch (error) {
       console.error("Error submitting form:", error);
       form.setError("root", {

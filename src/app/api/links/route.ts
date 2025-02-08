@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { db } from "@/lib/db";
+import getThumbnailUrl from "@/lib/api/getThumbnailUrl";
 
 // GET /api/links - Get all links for the current user
 export async function GET() {
@@ -39,7 +40,7 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json();
-    const { url, collection, title, description, importance, thumbnail, tags } = body;
+    const { url, collection, title, description, importance, tags } = body;
 
     if (!url) {
       return NextResponse.json(
@@ -55,6 +56,8 @@ export async function POST(request: NextRequest) {
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
+
+    const thumbnail = await getThumbnailUrl({ userUrl: url });
 
     const link = await db.link.create({
       data: {
@@ -75,7 +78,7 @@ export async function POST(request: NextRequest) {
       data: { numLinks: { increment: 1 } },
     });
 
-    return NextResponse.json({ link }, { status: 201 });
+    return NextResponse.json( { status: 201 });
   } catch (error) {
     console.error("Error creating link:", error);
     return NextResponse.json(

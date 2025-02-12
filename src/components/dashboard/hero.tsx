@@ -17,7 +17,7 @@ export default function HeroClient() {
 
   return (
     <div className="flex flex-col items-center justify-center bg-white min-h-screen p-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-black">
         {savedLinks.map((link) => (
           <LinkCard
             key={link.id}

@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useState } from "react";
+import useUserLinks from "@/lib/api/useUserLinks";
 import {
   Form,
   FormControl,
@@ -19,7 +20,6 @@ import { DrawerClose } from "@/components/ui/drawer";
 import { Textarea } from "@/components/ui/textarea";
 import TagsInput from "@/components/ui/tag_field";
 import Importance from "./importance_field";
-import getThumbnailUrl from "@/lib/api/getThumbnailUrl";
 
 const linkFormSchema = z.object({
   url: z.string().url({ message: "Please enter a valid URL" }),
@@ -53,6 +53,8 @@ export function LinkForm({ initialData, onClose}: LinkFormProps) {
       isPinned: initialData?.isPinned || false,
     },
   });
+
+  const { mutateLinks } = useUserLinks();
   
   const onSubmit: SubmitHandler<LinkFormData> = async(data) => {
     try {
@@ -75,6 +77,8 @@ export function LinkForm({ initialData, onClose}: LinkFormProps) {
         console.error("Error creating link:", result.error);
         return;
       }
+      
+      mutateLinks();
       onClose();
     } catch (error) {
       console.error("Error submitting form:", error);

@@ -21,7 +21,7 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ links: user.links });
+    return NextResponse.json(user.links);
   } catch (error) {
     console.error("Error fetching links:", error);
     return NextResponse.json(
@@ -35,6 +35,8 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
+    console.log(session);
+    console.log(session?.user);
     if (!session?.user?.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

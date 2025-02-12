@@ -5,15 +5,15 @@ import { Link } from "@prisma/client";
 import { LinkCard } from "@/components/dashboard/LinkCard";
 import { LinkForm } from "@/components/dashboard/LinkForm";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { useToast } from "@/components/ui/use-toast";
+// import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+// import { useToast } from "@/components/ui/use-toast";
 import { Plus } from "lucide-react";
 
 export default function LinksPage() {
   const [links, setLinks] = useState<Link[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingLink, setEditingLink] = useState<Link | null>(null);
-  const { toast } = useToast();
+  // const { toast } = useToast();
 
   // Fetch links on component mount
   const fetchLinks = async () => {
@@ -23,11 +23,11 @@ export default function LinksPage() {
       const data = await response.json();
       setLinks(data.links);
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to fetch links",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to fetch links",
+      //   variant: "destructive",
+      // });
     }
   };
 
@@ -44,16 +44,16 @@ export default function LinksPage() {
       
       await fetchLinks();
       setIsFormOpen(false);
-      toast({
-        title: "Success",
-        description: "Link created successfully",
-      });
+      // toast({
+      //   title: "Success",
+      //   description: "Link created successfully",
+      // });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to create link",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to create link",
+      //   variant: "destructive",
+      // });
     }
   };
 
@@ -72,16 +72,16 @@ export default function LinksPage() {
       
       await fetchLinks();
       setEditingLink(null);
-      toast({
-        title: "Success",
-        description: "Link updated successfully",
-      });
+      // toast({
+      //   title: "Success",
+      //   description: "Link updated successfully",
+      // });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update link",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to update link",
+      //   variant: "destructive",
+      // });
     }
   };
 
@@ -95,16 +95,16 @@ export default function LinksPage() {
       if (!response.ok) throw new Error("Failed to delete link");
       
       await fetchLinks();
-      toast({
-        title: "Success",
-        description: "Link deleted successfully",
-      });
+      // toast({
+      //   title: "Success",
+      //   description: "Link deleted successfully",
+      // });
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to delete link",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to delete link",
+      //   variant: "destructive",
+      // });
     }
   };
 
@@ -121,11 +121,11 @@ export default function LinksPage() {
       
       await fetchLinks();
     } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update link",
-        variant: "destructive",
-      });
+      // toast({
+      //   title: "Error",
+      //   description: "Failed to update link",
+      //   variant: "destructive",
+      // });
     }
   };
 
@@ -150,7 +150,7 @@ export default function LinksPage() {
         ))}
       </div>
 
-      <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+      {/* <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add New Link</DialogTitle>
@@ -175,7 +175,7 @@ export default function LinksPage() {
             />
           )}
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </div>
   );
 }
